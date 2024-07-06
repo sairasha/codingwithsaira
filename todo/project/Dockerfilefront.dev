@@ -1,0 +1,16 @@
+FROM python:3.12
+
+WORKDIR /app
+
+
+COPY pyproject.toml poetry.lock /app/
+
+RUN pip install virtualenv
+
+RUN pip install poetry
+RUN poetry install
+
+COPY . /app/
+RUN ls -al /app
+
+CMD ["poetry", "run", "streamlit","run", "frontend/app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
